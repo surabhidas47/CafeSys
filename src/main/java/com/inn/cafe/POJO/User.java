@@ -31,6 +31,9 @@ public class User implements Serializable {
     @Column(name="id")
     private Integer id;
 
+    @Column(name="name")
+    private String name;
+
     @Column(name="contactNumber")
     private String contactNumber;
 
