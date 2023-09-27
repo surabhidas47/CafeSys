@@ -7,6 +7,10 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import java.io.Serializable;
 
+//capital User in User.find.. bc referring to class name
+//u is the alias, using JPQL
+@NamedQuery(name = "User.findByEmailId", query = "select u from User u where u.email=:email")
+
 //uses lombok to generate getters and setters & default constructor
 @Data
 @Entity
