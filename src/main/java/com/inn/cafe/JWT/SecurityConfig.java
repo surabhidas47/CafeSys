@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
 //creates a bean whenever project starts
@@ -26,6 +27,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Autowired
     CustomerUserDetailsService customerUserDetailsService;
 
+    @Autowired
+    JwtFilter jwtFilter;
+
 
     // overrides the configure method from WebSecurityConfigurerAdapter.
     // It configures the authentication manager to use the customerUserDetailsService for user authentication.
@@ -38,6 +42,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     //creating a bean
     // means that no password encoding (plaintext passwords) is used
+   @Bean
     public PasswordEncoder passwordEncoder(){
         //we will encode later
         return NoOpPasswordEncoder.getInstance();
@@ -63,13 +68,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .csrf().disable()
                 .authorizeRequests()
                 //bypassing apis from UserRest..besides these three, authentica te and handle exceptions
-                .antMatchers("/user/login","user/signup","/user/forgotPassword")
+                .antMatchers("/user/login","/user/signup","/user/forgotPassword")
                 .permitAll()
                 .anyRequest()
-                .authenticated()
+                .authenticated()g
                 .and().exceptionHandling()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        http.addFilterBefore(jwtFilter,UsernamePasswordAuthenticationFilter.class);
     }
 }

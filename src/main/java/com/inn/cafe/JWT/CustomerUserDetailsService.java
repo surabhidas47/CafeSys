@@ -31,12 +31,13 @@ public class CustomerUserDetailsService implements UserDetailsService {
        userDetail = userDao.findByEmailId(username);
        if(!Objects.isNull(userDetail))
            //USer not of POJO type..of springsecurity
+           //third this is role, dont have it so extracting from token?
            return new User(userDetail.getEmail(),userDetail.getPassword(),new ArrayList<>());
        else
            throw new UsernameNotFoundException("User not found.");
     }
 
-    public  com.inn.cafe.POJO.User getUserDetail(){
+    public com.inn.cafe.POJO.User getUserDetail(){
         return userDetail;
     }
 
