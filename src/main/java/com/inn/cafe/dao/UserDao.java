@@ -6,7 +6,7 @@ import org.springframework.data.repository.query.Param;
 
 public interface UserDao extends JpaRepository<User,Integer> {
 
-    //this is connected to user in POJO
+    //this is connected to user in POJO, passing in the POJO
     //method declaration used for querying...
     User findByEmailId(@Param("email") String email);
 }
