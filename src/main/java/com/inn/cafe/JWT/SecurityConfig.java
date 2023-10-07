@@ -1,7 +1,7 @@
 package com.inn.cafe.JWT;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.proxy.NoOp;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -71,12 +71,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                 .antMatchers("/user/login","/user/signup","/user/forgotPassword")
                 .permitAll()
                 .anyRequest()
-                .authenticated()g
+                .authenticated()
                 .and().exceptionHandling()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.addFilterBefore(jwtFilter,UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtFilter , UsernamePasswordAuthenticationFilter.class);
+
     }
 }
